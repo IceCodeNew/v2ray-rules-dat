@@ -114,6 +114,7 @@ scoop install v2ray-rules-dat
       "domain": [
         "geosite:apple-cn",
         "geosite:google-cn",
+        "geosite:tld-cn",
         "domain:icloud.com",
         "domain:icloud-content.com"
       ]
@@ -142,21 +143,20 @@ scoop install v2ray-rules-dat
 "dns": {
   "servers": [
     {
-      "address": "1.1.1.1",
-      "port": 53,
-      "domains": [
-        "geosite:geolocation-!cn"
-      ]
-    },
-    {
-      "address": "114.114.114.114",
+      "address": "223.5.5.5",
       "port": 53,
       "domains": [
         "geosite:cn"
       ]
     },
-    "8.8.8.8",
-    "223.5.5.5"
+    {
+      "address": "45.90.28.0",
+      "port": 53,
+      "domains": [
+        "geosite:geolocation-!cn"
+      ]
+    },
+    "45.90.30.0"
   ]
 }
 ```
@@ -282,6 +282,13 @@ scoop install v2ray-rules-dat
         "outboundTag": "Reject",
         "domain": [
           "geosite:category-ads-all"
+        ]
+      },
+      {
+        "type": "field",
+        "outboundTag": "Direct",
+        "domain": [
+          "geosite:tld-cn"
         ]
       },
       {
