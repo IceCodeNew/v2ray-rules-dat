@@ -70,7 +70,7 @@ jobs:
       - name: Get and add direct domains into temp-direct.txt file
         run: |
           curl -sSL $CHINA_DOMAINS_URL | perl -ne '/^server=\/([^\/]+)\// && print "$1\n"' > temp-direct.txt
-          curl -sSL $ICN_RULES_DIRECT_URL | sed -E '/^#|^$|ads/d' >> temp-direct.txt
+          curl -sSL $ICN_RULES_DIRECT_URL | sed -E '/^#|^$/d' >> temp-direct.txt
 
       - name: Get and add proxy domains into temp-proxy.txt file
         run: |
@@ -90,7 +90,7 @@ jobs:
           curl -sSL $GEQ1AN_RULES_REJECT_URL | awk -F ',' '/^(HOST|DOMAIN)(,|\-SUFFIX,).+AdBlock/ {print $2}' > temp-reject.txt
           curl -sSL $LHIE1_RULES_REJECT_URL | awk -F ',' '/^DOMAIN(,|\-SUFFIX,).+/ {print $2}' >> temp-reject.txt
           curl -sSL $ADAWAY_REJECT_URL | grep "127.0.0.1" | sed '1d' | awk '{print $2}' >> temp-reject.txt
-          curl -sSL $ICN_RULES_REJECT_URL | sed -E '/^#|^$|ads/d' >> temp-reject.txt
+          curl -sSL $ICN_RULES_REJECT_URL | sed -E '/^#|^$/d' >> temp-reject.txt
 
       - name: Add proxy, direct and reject domains from "hidden" branch to appropriate temp files
         run: |
