@@ -193,10 +193,12 @@ scoop install v2ray-rules-dat
   },
   "dns": {
     "servers": [
+      "https://dns.google/dns-query",
       {
         "address": "https+local://223.5.5.5/dns-query",
         "domains": [
-          "geosite:cn"
+          "geosite:cn",
+          "geosite:icloud"
         ],
         "expectIPs": [
           "geoip:cn"
