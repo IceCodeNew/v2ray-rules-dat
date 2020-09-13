@@ -2,6 +2,7 @@
 addthis.com
 addthisedge.com
 analytics.google.com
+analytics.twitter.com
 bdtj.tagtic.cn
 d.ifengimg.com
 icons.mydrivers.com
