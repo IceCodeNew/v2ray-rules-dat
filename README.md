@@ -12,7 +12,7 @@
 ### geoip.dat
 
 - 通过仓库 [@Loyalsoldier/geoip](https://github.com/Loyalsoldier/geoip) 生成
-- 其中全球 IP 地址（IPv4 和 IPv6）来源于 [MaxMind GeoLite2](https://dev.maxmind.com/geoip/geoip2/geolite2/)，`CN`（中国大陆）类别下的 IPv4 地址来源于 [@17mon/china_ip_list](https://github.com/17mon/china_ip_list/blob/master/china_ip_list.txt)
+- 其中全球 IP 地址（IPv4 和 IPv6）来源于 [MaxMind GeoLite2](https://dev.maxmind.com/geoip/geoip2/geolite2/)，`CN`（中国大陆）类别下的 IPv4 地址来源于 [ipip.net](https://github.com/17mon/china_ip_list)
 
 ### geosite.dat
 
@@ -443,9 +443,6 @@ scoop install v2ray-rules-dat
 
 ## 致谢
 
-> This product includes GeoLite2 data created by MaxMind, available from [Maxmind](https://www.maxmind.com).
-
-- [MaxMind GeoLite2 Free IP Database](https://dev.maxmind.com/geoip/geoip2/geolite2/)
 - [@v2fly/geoip](https://github.com/v2fly/geoip)
 - [@Loyalsoldier/geoip](https://github.com/Loyalsoldier/geoip)
 - [@v2fly/domain-list-community](https://github.com/v2fly/domain-list-community)
