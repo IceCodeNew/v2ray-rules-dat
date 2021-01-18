@@ -35,8 +35,11 @@ jobs:
           echo "PETERLOWE_REJECT_URL=https://pgl.yoyo.org/adservers/serverlist.php?hostformat=hosts&showintro=1&mimetype=plaintext" >> $GITHUB_ENV
           echo "ADGUARD_DNS_REJECT_URL=https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt" >> $GITHUB_ENV
           echo "DANPOLLOCK_REJECT_URL=https://someonewhocares.org/hosts/hosts" >> $GITHUB_ENV
-          echo "CUSTOM_DIRECT=https://raw.githubusercontent.com/IceCodeNew/domain-list-custom/release/cn.txt" >> $GITHUB_ENV
-          echo "CUSTOM_PROXY=https://raw.githubusercontent.com/IceCodeNew/domain-list-custom/release/geolocation-!cn.txt" >> $GITHUB_ENV
+          echo "CUSTOM_DIRECT=https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/cn.txt" >> $GITHUB_ENV
+          echo "CUSTOM_PROXY=https://raw.githubusercontent.com/Loyalsoldier/domain-list-custom/release/geolocation-!cn.txt" >> $GITHUB_ENV
+          echo "WIN_SPY=https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/spy.txt" >> $GITHUB_ENV
+          echo "WIN_UPDATE=https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/update.txt" >> $GITHUB_ENV
+          echo "WIN_EXTRA=https://raw.githubusercontent.com/crazy-max/WindowsSpyBlocker/master/data/hosts/extra.txt" >> $GITHUB_ENV
           echo "ICN_RULES_DIRECT_URL=https://raw.githubusercontent.com/IceCodeNew/4Share/master/Proxifier/GetWhiteDomainLists/extra_dlc_cn.txt" >> $GITHUB_ENV
           echo "ICN_RULES_REJECT_URL=https://raw.githubusercontent.com/IceCodeNew/4Share/master/v2rayN/v2rayN_block_rules.txt" >> $GITHUB_ENV
         shell: bash
@@ -156,6 +159,12 @@ jobs:
           cat ./community/data/gfw | sort --ignore-case -u > gfw.txt
           curl -sSL $GREATFIRE_DOMAINS_URL | perl -ne '/^((?=^.{3,255})[a-zA-Z0-9][-_a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-_a-zA-Z0-9]{0,62})+)/ && print "$1\n"' >> ./community/data/greatfire
           cat ./community/data/greatfire | sort --ignore-case -u > greatfire.txt
+          curl -sSL $WIN_SPY | grep "0.0.0.0" | awk '{print $2}' > ./community/data/win-spy
+          curl -sSL $WIN_SPY | grep "0.0.0.0" | awk '{print $2}' > win-spy.txt
+          curl -sSL $WIN_UPDATE | grep "0.0.0.0" | awk '{print $2}' > ./community/data/win-update
+          curl -sSL $WIN_UPDATE | grep "0.0.0.0" | awk '{print $2}' > win-update.txt
+          curl -sSL $WIN_EXTRA | grep "0.0.0.0" | awk '{print $2}' > ./community/data/win-extra
+          curl -sSL $WIN_EXTRA | grep "0.0.0.0" | awk '{print $2}' > win-extra.txt
 
       - name: Build geosite.dat file
         run: |
@@ -169,7 +178,7 @@ jobs:
           install -Dp ./custom/publish/dlc.dat ./publish/geosite.dat
           install -p {proxy,direct,reject}-tld-list.txt ./publish/
           install -p {proxy,direct,reject}-list.txt ./publish/
-          install -p {apple-cn,google-cn,gfw,greatfire}.txt ./publish/
+          install -p {apple-cn,google-cn,gfw,greatfire,win-spy,win-update,win-extra}.txt ./publish/
           cd ./publish || exit 1
           zip rules.zip {proxy,direct,reject}-list.txt geoip.dat geosite.dat
           sha256sum geosite.dat > geosite.dat.sha256sum
