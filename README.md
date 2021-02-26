@@ -139,9 +139,24 @@
 - [**慎用**]`geosite:win-update`：包含 [@crazy-max/WindowsSpyBlocker/hosts/update.txt](https://github.com/crazy-max/WindowsSpyBlocker/blob/master/data/hosts/update.txt) 文件里的域名，供希望屏蔽 Windows 操作系统自动升级的用户使用。
 - [**慎用**]`geosite:win-extra`：包含 [@crazy-max/WindowsSpyBlocker/hosts/extra.txt](https://github.com/crazy-max/WindowsSpyBlocker/blob/master/data/hosts/extra.txt) 文件里的域名，供希望屏蔽 Windows 操作系统附加隐私跟踪域名的用户使用。
 
-> ⚠️注意：在 Routing 配置中，类别越靠前（上），优先级越高，所以 `geosite:apple-cn` 和 `geosite:google-cn` 要放置在 `geosite:geolocation-!cn` 前（上）面。
+> ⚠️ 注意：在 Routing 配置中，类别越靠前（上），优先级越高，所以 `geosite:apple-cn` 和 `geosite:google-cn` 要放置在 `geosite:geolocation-!cn` 前（上）面才能生效。
 
-配置参考下面 👇👇👇
+#### 高级用法
+
+v2fly/domain-list-community 项目 [data](https://github.com/v2fly/domain-list-community/tree/master/data) 目录中某些列表里的规则会被标记诸如 `@cn` 的 attribute（如下所示），意为该域名在中国大陆有接入点，可直连。
+
+```
+steampowered.com.8686c.com @cn
+steamstatic.com.8686c.com @cn
+```
+
+对于玩 Steam 国区游戏，想要直连的用户，可以设置类别 `geosite:steam@cn` 为直连，意为将 [steam](https://github.com/v2fly/domain-list-community/blob/master/data/steam) 列表内所有被标记了 `@cn` attribute 的规则（域名）设置为直连。同理，由于 [category-games](https://github.com/v2fly/domain-list-community/blob/master/data/category-games) 列表包含了 `steam`、`ea`、`blizzard`、`epicgames` 和 `nintendo` 等常见的游戏厂商。设置类别 `geosite:category-games@cn` 为直连，即可节省大量服务器流量。
+
+> ⚠️ 注意：在 Routing 配置中，类别越靠前（上），优先级越高，所以 `geosite:category-games@cn` 等所有带有 `@cn` attribute 的规则都要放置在 `geosite:geolocation-!cn` 前（上）面才能生效。
+> 
+> `category-games` 列表内的规则（域名）可能会有疏漏，请留意规则命中情况。如发现遗漏，欢迎到项目 v2fly/domain-list-community 提 [issue](https://github.com/v2fly/domain-list-community/issues) 反馈。
+
+#### 配置参考下面 👇👇👇
 
 **白名单模式 Routing 配置方式**：
 
@@ -162,7 +177,8 @@
         "geosite:private",
         "geosite:apple-cn",
         "geosite:google-cn",
-        "geosite:tld-cn"
+        "geosite:tld-cn",
+        "geosite:category-games@cn"
       ]
     },
     {
@@ -234,17 +250,21 @@
       "address": "223.5.5.5",
       "port": 53,
       "domains": [
-        "geosite:cn"
+        "geosite:cn",
+        "geosite:category-games@cn"
+      ],
+      "expectIPs": [
+        "geoip:cn"
       ]
     },
     {
-      "address": "45.90.28.0",
-      "port": 53,
+      "address": "https://1.1.1.1/dns-query",
       "domains": [
         "geosite:geolocation-!cn"
       ]
     },
-    "45.90.30.0"
+    "https+local://223.5.5.5/dns-query",
+    "119.29.29.29"
   ]
 }
 ```
@@ -271,7 +291,8 @@
         "address": "https+local://223.5.5.5/dns-query",
         "domains": [
           "geosite:cn",
-          "geosite:icloud"
+          "geosite:icloud",
+          "geosite:category-games@cn"
         ],
         "expectIPs": [
           "geoip:cn"
@@ -381,7 +402,8 @@
         "outboundTag": "Direct",
         "domain": [
           "geosite:tld-cn",
-          "geosite:icloud"
+          "geosite:icloud",
+          "geosite:category-games@cn"
         ]
       },
       {
