@@ -4,6 +4,7 @@ addthisedge.com
 alimama.alicdn.com
 alimama.com
 analytics.google.com
+analytics.twitter.com
 app.chat.xiaomi.net
 bdtj.tagtic.cn
 cdn.onesignal.com
